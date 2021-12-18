@@ -42,7 +42,7 @@
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
     "@testing-library/react-hooks": "^3.4.1",
-    "babel-loader": "^8.0.5",
+    
     "cypress": "^4.12.1",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
@@ -58,12 +58,12 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yuzhakova/scheduler.git"
+    "url": "git+https://github.com/JAfong560/scheduler.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yuzhakova/scheduler/issues"
+    "url": "https://github.com/JAfong560/scheduler/issues"
   },
-  "homepage": "https://github.com/yuzhakova/scheduler#readme"
+  "homepage": "https://github.com/JAfong560/scheduler#readme"
 }
