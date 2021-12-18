@@ -1,6 +1,7 @@
 import React from 'react';
 import 'components/InterviewerList.scss';
 import InterviewerListItem from 'components/InterviewerListItem';
+import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
   /*Takes in Three props
@@ -8,19 +9,19 @@ export default function InterviewerList(props) {
   interviewer: id
   setInterviewer:function; accepts id of interviewer
   */ 
-// InterviewerList.js
 
-const interviewers = props.interviewers.map((interviewer) => {
+  const interviewers = props.interviewers.map(interviewerObj => {
+
     return (
       <InterviewerListItem 
-        key={interviewer.id}
-        name={interviewer.name}
-        avatar={interviewer.avatar}
-        selected={interviewer.id === value}
-        setInterviewer={() => props.setInterviewer(interviewer.id)} 
+        key={interviewerObj.id}
+        name={interviewerObj.name}
+        avatar={interviewerObj.avatar}
+        selected={interviewerObj.id === props.value}
+        setInterviewer={(event) => props.onChange(interviewerObj.id)}
       />
-    );
-  });
+    )
+  })
 
   return (
     <section className="interviewers">
@@ -28,4 +29,9 @@ const interviewers = props.interviewers.map((interviewer) => {
       <ul className="interviewers__list">{interviewers}</ul>
     </section> 
   )
+}
+
+InterviewerList.propTypes = {
+  value: PropTypes.number,
+  onChange: PropTypes.func.isRequired
 }

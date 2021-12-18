@@ -1,28 +1,42 @@
-import React, { useState } from "react";
+// eslint-disable-next-line
+import React, { useState, useEffect } from "react";
 
 import "components/Application.scss";
 import DayList from "./DayList";
-
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+// eslint-disable-next-line
+import InterviewerList from "./InterviewerList";
+import Appointment from "components/Appointment";
+// eslint-disable-next-line
+import { matchAppointments, getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import useApplicationData from "hooks/useApplicationData";
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
+
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
+
+  const appointmentObjects = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
+
+  const appointment = appointmentObjects.map((appointmentObject) => {
+    const interview = getInterview(state, appointmentObject.interview)
+
+    return (
+        <Appointment 
+          {...appointmentObject}
+          key={appointmentObject.id}
+          interview={interview}
+          interviewers={interviewers}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+        />
+      )
+  });
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -33,11 +47,13 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList
-            days={days}
-            value={day}
-            onChange={setDay}
-          />
+        <DayList
+          days={state.days}
+          day={state.day}
+          setDay={setDay}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+        />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -46,7 +62,9 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {appointment}
+        <Appointment key="last" time="5pm" bookInterview={bookInterview} cancelInterview={cancelInterview} 
+        />
       </section>
     </main>
   );
